@@ -11,7 +11,7 @@
     
     <style>
         #map { height: 450px; width: 100%; z-index: 1; border-radius: 2rem; background: #f5f5f5; border: 2px solid #fff; }
-        .slider-img { transition: opacity 1.5s ease-in-out; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .slider-img, .mini-slider-img { transition: opacity 1s ease-in-out; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         .rally-marker { font-size: 32px; filter: drop-shadow(0 0 10px #ea580c); animation: bounce 2s infinite alternate; }
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
         .glass-card { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
@@ -81,11 +81,6 @@
             <img src="image.png" class="slider-img opacity-100" alt="Slider 1">
             <img src="image1.jpeg" class="slider-img opacity-0" alt="Slider 2">
             <img src="image2.jpeg" class="slider-img opacity-0" alt="Slider 3">
-            <img src="image3.jpg" class="slider-img opacity-0" alt="Slider 4">
-            <img src="image4.png" class="slider-img opacity-0" alt="Slider 5">
-            <img src="image5.jpeg" class="slider-img opacity-0" alt="Slider 6">
-            <img src="image6.jpg" class="slider-img opacity-0" alt="Slider 7">
-            <img src="image7.jpg" class="slider-img opacity-0" alt="Slider 8">
         </div>
         <div class="absolute inset-0 bg-gradient-to-t from-stone-50 via-transparent to-black/20"></div>
     </section>
@@ -132,10 +127,23 @@
         </section>
 
         <section id="food-section" class="space-y-6">
+            <div id="mini-slider" class="relative h-[400px] md:h-[500px] w-full overflow-hidden rounded-[2.5rem] shadow-2xl border-4 border-white">
+                <img src="image1.jpeg" class="mini-slider-img opacity-100">
+                <img src="image2.jpeg" class="mini-slider-img opacity-0">
+                <img src="image3.jpg" class="mini-slider-img opacity-0">
+                
+                <div class="absolute bottom-10 left-0 right-0 text-center z-10">
+                    <span class="bg-orange-600/90 text-white px-8 py-3 rounded-full font-black text-2xl shadow-2xl backdrop-blur-sm">
+                        विराट हिंदू संमेलन
+                    </span>
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            </div>
+
             <div class="bg-orange-600 text-white rounded-[3rem] p-10 shadow-2xl relative overflow-hidden">
                 <div class="relative z-10">
                     <h2 class="text-3xl font-black uppercase tracking-tighter trans-food-title">🍛 Snehabhojan</h2>
-                    <p id="mahaprasad-text" class="text-lg font-medium mt-4 leading-relaxed opacity-90"></p>
+                    <p id="mahaprasad-text" class="text-lg font-medium mt-4 leading-relaxed opacity-95"></p>
                 </div>
                 <div class="absolute -right-10 -bottom-10 opacity-10"><svg width="200" height="200" viewBox="0 0 24 24" fill="currentColor"><path d="M11 9H9V2H7V9H5V2H3V9C3 11.12 4.66 12.84 6.75 12.97V22H9.25V12.97C11.34 12.84 13 11.12 13 9V2H11V9ZM16 6V14H18.5V22H21V2H16C16 4.21 16 6 16 6Z"/></svg></div>
             </div>
@@ -152,7 +160,7 @@
                 <h2 class="text-5xl md:text-7xl font-black text-orange-600 tracking-tighter leading-none">IMPERIUM</h2>
             </div>
 
-            <p class="text-stone-400 text-[10px] font-bold uppercase tracking-[0.3em] mt-10 trans-copyright opacity-60 italic">विराट हिंदू संमेलन • २०२६</p>
+            <p class="text-stone-400 text-[10px] font-bold uppercase tracking-[0.3em] mt-10 trans-copyright opacity-60 italic text-center">विराट हिंदू संमेलन • २०२६</p>
             
             <div class="flex items-center justify-center gap-6 text-stone-500 text-xs font-black uppercase tracking-widest mt-6">
                 <a href="https://imperiumofficial.in" target="_blank" class="hover:text-orange-500 transition-all border-b-2 border-transparent hover:border-orange-500 pb-1">ImperiumOfficial</a>
@@ -199,7 +207,7 @@
                 milestones: "🕒 Shobhayatra Milestones (19th March)", 
                 scheduleTitle: "Key Event Dates",
                 foodTitle: "🍛 Snehabhojan", 
-                mahaprasad: "On 29th March, a Grand Snehabhojan will be held for all devotees at Lane No. 11 Shivraj Mitra Mandal (Panyachya Taki Javal), Ganpati Mandir.",
+                mahaprasad: "On 29th March, a Grand Snehabhojan will be held for all devotees at Ashtavinayak Mitra Mandal, Lane 11 (Panyachya Taki Javal), Ganpati Mandir at 7:30 PM.",
                 whatsapp: "Join WhatsApp Group", 
                 copyright: "Virat Hindu Sammelan • 2026",
                 adminTitle: "Broadcaster Access", 
@@ -221,7 +229,7 @@
                 milestones: "🕒 शोभायात्रा टप्पे (१९ मार्च)", 
                 scheduleTitle: "प्रमुख कार्यक्रमाच्या तारखा",
                 foodTitle: "🍛 स्नेहभोजन", 
-                mahaprasad: "२९ मार्च रोजी, Lane No. 11 शिवराज मित्र मंडळ (पाण्याच्या टाकी जवळ), गणपती मंदिर येथे दुपारी स्नेहभोजनाचे आयोजन करण्यात आले आहे.",
+                mahaprasad: "२९ मार्च रोजी, Lane 11 अष्टविनायक मित्र मंडळ (पाण्याच्या टाकी जवळ), गणपती मंदिर येथे संध्याकाळी ७:३० वाजता स्नेहभोजनाचे आयोजन करण्यात आले आहे.",
                 whatsapp: "व्हॉट्सॲप ग्रुपला जॉईन व्हा", 
                 copyright: "विराट हिंदू संमेलन • २०२६",
                 adminTitle: "ब्रॉडकास्टर एक्सेस", 
@@ -242,14 +250,13 @@
                     { name: "Shivrai Mitra Mandal" }, { name: "Ashtavinayak Mitra Mandal" }, { name: "Shirmant Morya Chowk Lane 10" },
                     { name: "Morya Udhyaan" }, { name: "Tiranga Mitra Mandal" }, { name: "Trimurti Mitra Mandal" },
                     { name: "Shivmudra Mitra Mandal" }, { name: "Vignartha Mitra Mandal" }, { name: "Ekta Chowk" },
-                    { name: "Lane Number 6" }, { name: "Maji Sainki Mitra Mandal" }, { name: "Lane 2 Tirupati Mangal Karayla" },
-                    { name: "Hanuman Mandir, Tirupati Campus" }, { name: "Chatrapati Shivaji Maharaj Chowk Lane 1" },
-                    { name: "Sawant Petrol Pump" }, { name: "Vishrantwadi Chowk" }, { name: "Kalas Chowk" },
-                    { name: "Chatrapati Sambhaji Maharaj Chowk, Kalas (End)" }
+                    { name: "Lane Number 6" }, { name: "Maji Sainki Mitra Mandal" }, { name: "Lane 5 Nyati Society" },
+                    { name: "Tirupati Magal Karayla" }, { name: "Hanuman Mandir, Tirupati Campus" }, { name: "Chatrapati Shivaji Maharaj Chowk Lane 1" },
+                    { name: "Sawant Petrol Pump" }, { name: "Vishrantwadi Chowk" }, { name: "Chatrapati Sambhaji Maharaj Chowk, Kalas (End)" }
                 ],
                 schedule: [
-                    { date: "19", month: "March", title: "Grand Shobhayatra", desc: "Procession across 24 main points starting from Lane 14 and concluding at Chatrapati Sambhaji Maharaj Chowk, Kalas." },
-                    { date: "29", month: "March", title: "Virat Hindu Sammelan", desc: "Main gathering and Snehabhojan at Lane No. 11 Ganpati Mandir." }
+                    { date: "19", month: "March", title: "Grand Shobhayatra", desc: "Detailed procession starts from Lane 14 and concludes at Kalas area." },
+                    { date: "29", month: "March", title: "Virat Hindu Sammelan", desc: "Main gathering and Snehabhojan at Lane 11 Ganpati Mandir." }
                 ]
             },
             mr: {
@@ -259,10 +266,9 @@
                     { name: "शिवराई मित्र मंडळ" }, { name: "अष्टविनायक मित्र मंडळ" }, { name: "श्रीमंत मोरया चौक Lane 10" },
                     { name: "मोरया उद्यान" }, { name: "तिरंगा मित्र मंडळ" }, { name: "त्रिमूर्ती मित्र मंडळ" },
                     { name: "शिवमुद्रा मित्र मंडळ" }, { name: "विघ्नहर्ता मित्र मंडळ" }, { name: "एकता चौक" },
-                    { name: "Lane ६" }, { name: "माजी सैनिक मित्र मंडळ" }, { name: "तिरुपती मंगल कार्यालय" },
-                    { name: "हनुमान मंदिर, तिरुपती कॅम्पस" }, { name: "छत्रपती शिवाजी महाराज चौक Lane 1" },
-                    { name: "सावंत पेट्रोल पंप" }, { name: "विश्रांतवाडी चौक" }, { name: "कळस चौक" },
-                    { name: "छत्रपती संभाजी महाराज चौक, कळस (समारोप)" }
+                    { name: "Lane ६" }, { name: "माजी सैनिक मित्र मंडळ" }, { name: "Lane 5 ज्ञाती सोसायटी" },
+                    { name: "तिरुपती मंगल कार्यालय" }, { name: "हनुमान मंदिर, तिरुपती कॅम्पस" }, { name: "छत्रपती शिवाजी महाराज चौक Lane 1" },
+                    { name: "सावंत पेट्रोल पंप" }, { name: "विश्रांतवाडी चौक" }, { name: "छत्रपती संभाजी महाराज चौक, कळस (समारोप)" }
                 ],
                 schedule: [
                     { date: "१९", month: "मार्च", title: "भव्य शोभायात्रा", desc: "Lane १४ पासून सुरू होऊन २४ प्रमुख ठिकाणांवरून शोभायात्रेचा छत्रपती संभाजी महाराज चौक, कळस येथे समारोप होईल." },
@@ -324,7 +330,10 @@
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
             L.polyline(GPS_ROUTE_COORDS, { color: '#ea580c', weight: 6, opacity: 0.7 }).addTo(map);
             rallyMarker = L.marker(GPS_ROUTE_COORDS[0], { icon: L.divIcon({ html: `<div class="rally-marker">🚩</div>`, iconSize: [40, 40], iconAnchor: [20, 40], className: 'c' }) }).addTo(map);
-            setTimeout(() => { map.invalidateSize(); map.setView(GPS_ROUTE_COORDS[0], 15); }, 800);
+            setTimeout(() => { 
+                map.invalidateSize(); 
+                map.setView(GPS_ROUTE_COORDS[0], 15);
+            }, 800);
         }
 
         async function startSync() {
@@ -342,9 +351,7 @@
                                 if(!isBroadcasting) map.panTo([d.lat, d.lng]);
                             }
                         } 
-                    }, (err) => {
-                        console.error("Firestore error:", err);
-                    });
+                    }, (err) => console.error("Firestore error:", err));
                 });
             } catch (e) { console.error("Auth error:", e); }
         }
@@ -373,12 +380,25 @@
             } else { location.reload(); }
         };
 
+        // Hero Slider
         let slideIdx = 0;
         setInterval(() => {
             const imgs = document.querySelectorAll('.slider-img');
-            imgs.forEach((img, i) => img.style.opacity = (i === slideIdx) ? '1' : '0');
-            slideIdx = (slideIdx + 1) % imgs.length;
-        }, 4000);
+            if(imgs.length > 0) {
+                imgs.forEach((img, i) => img.style.opacity = (i === slideIdx) ? '1' : '0');
+                slideIdx = (slideIdx + 1) % imgs.length;
+            }
+        }, 2000);
+
+        // Mini Slider
+        let miniIdx = 0;
+        setInterval(() => {
+            const mImgs = document.querySelectorAll('.mini-slider-img');
+            if(mImgs.length > 0) {
+                mImgs.forEach((img, i) => img.style.opacity = (i === miniIdx) ? '1' : '0');
+                miniIdx = (miniIdx + 1) % mImgs.length;
+            }
+        }, 2000);
     </script>
 </body>
 </html>
