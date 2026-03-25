@@ -5,15 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>विराट हिंदू संमेलन | Live Portal</title>
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
-        #map { height: 450px; width: 100%; z-index: 1; border-radius: 2rem; background: #f5f5f5; border: 2px solid #fff; }
         .slider-img, .mini-slider-img { transition: opacity 1s ease-in-out; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-        .rally-marker { font-size: 32px; filter: drop-shadow(0 0 10px #ea580c); animation: bounce 2s infinite alternate; }
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
         .glass-card { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
         
         #lang-overlay {
@@ -24,44 +19,15 @@
         }
         html { scroll-behavior: smooth; }
 
-        /* Vertical Timeline Styles */
+        /* Timeline Styles for Single Item */
         .timeline-container { position: relative; padding: 20px 0; }
-        .timeline-line {
-            position: absolute; left: 50%; width: 4px; height: 100%;
-            background: #fed7aa; transform: translateX(-50%);
-            border-radius: 2px;
-        }
-        @media (max-width: 768px) { .timeline-line { left: 20px; transform: none; } }
-        .timeline-item { position: relative; width: 100%; margin-bottom: 40px; display: flex; align-items: center; }
-        .timeline-content { width: 45%; position: relative; transition: all 0.3s ease; }
-        .timeline-dot {
-            position: absolute; left: 50%; width: 24px; height: 24px;
-            background: #f97316; border: 4px solid white; border-radius: 50%;
-            transform: translate(-50%, -50%); top: 50%; z-index: 10;
-            box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
-        }
-        .timeline-arrow {
-            position: absolute; top: 50%; width: 0; height: 0;
-            border-top: 10px solid transparent; border-bottom: 10px solid transparent;
-            transform: translateY(-50%);
-        }
-        .timeline-item-left { justify-content: flex-start; }
-        .timeline-item-right { justify-content: flex-end; }
-        .timeline-item-left .timeline-arrow { right: -10px; border-left: 10px solid white; }
-        .timeline-item-right .timeline-arrow { left: -10px; border-right: 10px solid white; }
-
-        @media (max-width: 768px) {
-            .timeline-item { padding-left: 45px; justify-content: flex-start; }
-            .timeline-content { width: 100%; }
-            .timeline-dot { left: 20px; }
-            .timeline-item-left .timeline-arrow, .timeline-item-right .timeline-arrow { 
-                left: -10px; border-right: 10px solid white; border-left: none; right: auto;
-            }
-        }
+        .timeline-item { position: relative; width: 100%; display: flex; align-items: center; justify-content: center; }
+        .timeline-content { width: 90%; max-width: 500px; position: relative; transition: all 0.3s ease; }
     </style>
 </head>
 <body class="bg-stone-50 font-sans text-stone-900 overflow-x-hidden">
 
+    <!-- LANGUAGE SELECTION OVERLAY -->
     <div id="lang-overlay">
         <div class="text-center p-8 glass-card rounded-[3rem] border-orange-500/30 max-w-sm w-full mx-4 text-stone-900 shadow-2xl">
             <div class="bg-orange-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-orange-600/40 text-white">
@@ -76,6 +42,7 @@
         </div>
     </div>
 
+    <!-- HERO SLIDER -->
     <section class="relative h-[60vh] md:h-[85vh] w-full overflow-hidden bg-stone-900">
         <div id="slider" class="w-full h-full">
             <img src="image.png" class="slider-img opacity-100" alt="Slider 1">
@@ -85,6 +52,7 @@
         <div class="absolute inset-0 bg-gradient-to-t from-stone-50 via-transparent to-black/20"></div>
     </section>
 
+    <!-- BRANDING SECTION -->
     <div class="max-w-4xl mx-auto pt-10 text-center px-6">
         <h1 id="main-title" class="text-5xl md:text-8xl font-black text-stone-900 leading-none tracking-tighter uppercase">
             विराट हिंदू संमेलन
@@ -95,42 +63,24 @@
         <div class="w-24 h-2 bg-orange-500 mx-auto mt-6 rounded-full"></div>
     </div>
 
+    <!-- MAIN CONTENT -->
     <main class="max-w-4xl mx-auto px-4 py-10 pb-32 space-y-24">
 
+        <!-- TIMELINE SECTION (ONLY 27th MARCH) -->
         <section id="schedule-section" class="space-y-12 animate-in fade-in duration-700">
-            <h2 class="text-3xl font-black text-stone-900 tracking-tighter uppercase trans-schedule-title text-center">Key Event Dates</h2>
+            <h2 class="text-3xl font-black text-stone-900 tracking-tighter uppercase trans-schedule-title text-center">Event Date</h2>
             <div class="timeline-container">
-                <div class="timeline-line"></div>
                 <div id="timeline-list"></div>
             </div>
         </section>
 
-        <section id="rally-section" class="space-y-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div>
-                    <h2 class="text-3xl font-black text-stone-900 tracking-tighter uppercase leading-none trans-rally-title">🚩 19th March: Shobhayatra Tracker</h2>
-                    <p class="text-stone-500 font-medium mt-2 id-rally-route-text">Lane 14 to Kalas</p>
-                </div>
-                <div id="live-status-pill" class="bg-stone-100 text-stone-500 px-4 py-2 rounded-xl text-xs font-black border border-stone-200 flex items-center gap-2">
-                    <span id="status-dot" class="w-2 h-2 rounded-full bg-stone-400"></span><span id="status-text" class="trans-connecting">CONNECTING</span>
-                </div>
-            </div>
-            
-            <div class="glass-card rounded-[3rem] shadow-2xl p-4 border-4 border-white overflow-hidden">
-                <div id="map"></div>
-            </div>
-
-            <div class="bg-white rounded-[2.5rem] shadow-xl border border-stone-100 overflow-hidden p-6 space-y-6">
-                <h3 class="font-black text-stone-800 flex items-center gap-2 uppercase tracking-tighter trans-milestone-title">🕒 Route Milestones (19th March)</h3>
-                <div class="grid md:grid-cols-2 gap-4" id="milestone-list"></div>
-            </div>
-        </section>
-
+        <!-- SNEHABHOJAN NOTICE -->
         <section id="food-section" class="space-y-6">
+            <!-- INCREASED HEIGHT MINI SLIDER -->
             <div id="mini-slider" class="relative h-[400px] md:h-[500px] w-full overflow-hidden rounded-[2.5rem] shadow-2xl border-4 border-white">
-                <img src="image1.jpeg" class="mini-slider-img opacity-100">
-                <img src="image2.jpeg" class="mini-slider-img opacity-0">
-                <img src="image3.jpg" class="mini-slider-img opacity-0">
+                <img src="image3.jpg" class="mini-slider-img opacity-100">
+                <img src="image4.png" class="mini-slider-img opacity-0">
+                <img src="image5.jpeg" class="mini-slider-img opacity-0">
                 
                 <div class="absolute bottom-10 left-0 right-0 text-center z-10">
                     <span class="bg-orange-600/90 text-white px-8 py-3 rounded-full font-black text-2xl shadow-2xl backdrop-blur-sm">
@@ -149,6 +99,7 @@
             </div>
         </section>
 
+        <!-- WHATSAPP & IMPERIUM SECTION -->
         <div class="pt-8 text-center">
             <a href="https://chat.whatsapp.com/I3vkHAXjNf406MnZ5sAWW7" target="_blank" class="flex items-center justify-center gap-4 w-full bg-[#25D366] hover:bg-[#128C7E] text-white py-6 rounded-[2.5rem] font-black text-xl shadow-2xl transition-all active:scale-95 shadow-green-200">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
@@ -170,130 +121,55 @@
         </div>
     </main>
 
-    <div class="fixed bottom-6 right-6 z-50">
-        <div id="admin-panel" class="hidden w-72 bg-stone-900 text-white rounded-[3rem] p-8 shadow-2xl border border-stone-800 mb-4 transition-all text-center">
-            <div id="auth-view">
-                <h3 class="text-[10px] font-black uppercase tracking-widest text-orange-500 mb-4 trans-admin-title text-center">Broadcaster Access</h3>
-                <input type="password" id="admin-pass" placeholder="..." class="w-full bg-stone-800 border border-stone-700 rounded-2xl px-5 py-4 text-sm mb-4 focus:outline-none text-white font-mono text-center">
-                <button onclick="handleUnlock()" class="w-full bg-orange-600 text-white font-black py-4 rounded-2xl text-xs active:scale-95 transition-all trans-unlock uppercase tracking-widest">Unlock</button>
-            </div>
-            <div id="control-view" class="hidden">
-                <h3 class="text-[10px] font-black uppercase tracking-widest text-green-500 mb-4 flex items-center justify-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Authorized</h3>
-                <button id="broadcast-btn" onclick="toggleBroadcast()" class="w-full bg-orange-600 hover:bg-orange-700 py-5 rounded-2xl font-black text-xs shadow-xl active:scale-95 transition-all trans-start-gps uppercase tracking-widest">Start Broadcast</button>
-            </div>
-        </div>
-        <button onclick="togglePanel()" class="bg-white p-5 rounded-[2rem] shadow-2xl border border-stone-200 text-stone-800 hover:bg-orange-50 active:scale-90 shadow-xl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button>
-    </div>
-
     <footer class="bg-stone-900 py-16 px-6 text-center border-t border-stone-800">
         <h2 id="footer-title" class="text-2xl font-black text-white tracking-tighter mb-4 uppercase">विराट हिंदू संमेलन</h2>
         <p class="text-stone-500 text-[10px] font-bold uppercase tracking-[0.3em] trans-copyright mb-6"></p>
     </footer>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
         const LANG_DATA = {
             en: {
                 mainTitle: 'VIRAT HINDU <span class="text-orange-500">SAMMELAN</span>', 
                 organizer: 'Organizer: Sakal Vidyanagar Hindu Samiti',
                 footerTitle: 'VIRAT HINDU SAMMELAN',
-                rallyTitle: "🚩 19th March: Shobhayatra Tracker", 
-                rallyRoute: "Lane 14 to Kalas", 
-                connecting: "Connecting",
-                liveSync: "Live Sync Active", 
-                milestones: "🕒 Shobhayatra Milestones (19th March)", 
-                scheduleTitle: "Key Event Dates",
+                scheduleTitle: "Event Timeline",
                 foodTitle: "🍛 Snehabhojan", 
-                mahaprasad: "On 29th March, a Grand Snehabhojan will be held for all devotees at Ashtavinayak Mitra Mandal, Lane 11 (Panyachya Taki Javal), Ganpati Mandir at 7:30 PM.",
+                mahaprasad: "On 27th March, a Grand Snehabhojan will be held for all devotees at Ashtavinayak Mitra Mandal, Lane 11 (Panyachya Taki Javal), Ganpati Mandir at 7:30 PM.",
                 whatsapp: "Join WhatsApp Group", 
-                copyright: "Virat Hindu Sammelan • 2026",
-                adminTitle: "Broadcaster Access", 
-                unlock: "Unlock Live Mode", 
-                startGps: "Start GPS Broadcast",
-                stopGps: "Stop Update", 
-                passPlaceholder: "Enter Password", 
-                checkpoints: "Point", 
-                march: "March"
+                copyright: "Virat Hindu Sammelan • 2026"
             },
             mr: {
                 mainTitle: 'विराट हिंदू <span class="text-orange-500">संमेलन</span>', 
                 organizer: 'आयोजक: सकल विद्यानगर हिंदू समिती',
                 footerTitle: 'विराट हिंदू संमेलन',
-                rallyTitle: "🚩 १९ मार्च: शोभायात्रा ट्रॅकर (थेट)", 
-                rallyRoute: "Lane 14 ते कळस", 
-                connecting: "कनेक्ट होत आहे",
-                liveSync: "थेट अपडेट सुरू आहे", 
-                milestones: "🕒 शोभायात्रा टप्पे (१९ मार्च)", 
-                scheduleTitle: "प्रमुख कार्यक्रमाच्या तारखा",
+                scheduleTitle: "प्रमुख कार्यक्रमाची तारीख",
                 foodTitle: "🍛 स्नेहभोजन", 
-                mahaprasad: "२९ मार्च रोजी, Lane 11 अष्टविनायक मित्र मंडळ (पाण्याच्या टाकी जवळ), गणपती मंदिर येथे संध्याकाळी ७:३० वाजता स्नेहभोजनाचे आयोजन करण्यात आले आहे.",
+                mahaprasad: "२७ मार्च रोजी, Lane 11 अष्टविनायक मित्र मंडळ (पाण्याच्या टाकी जवळ), गणपती मंदिर येथे संध्याकाळी ७:३० वाजता स्नेहभोजनाचे आयोजन करण्यात आले आहे.",
                 whatsapp: "व्हॉट्सॲप ग्रुपला जॉईन व्हा", 
-                copyright: "विराट हिंदू संमेलन • २०२६",
-                adminTitle: "ब्रॉडकास्टर एक्सेस", 
-                unlock: "थेट मोड अनलॉक करा", 
-                startGps: "लाईव्ह लोकेशन सुरू करा",
-                stopGps: "अपडेट थांबवा", 
-                passPlaceholder: "पासवर्ड टाका", 
-                checkpoints: "टप्पा", 
-                march: "मार्च"
+                copyright: "विराट हिंदू संमेलन • २०२६"
             }
         };
 
         const DATA = {
             en: {
-                route: [
-                    { name: "Vishweshwar mandir Lane 14 (Start)" }, { name: "Shiv Jwalwa Mitra Mandal" }, { name: "Sunil Tingre Office" },
-                    { name: "Lane 13 Omkar Mitra Mandal" }, { name: "Kishor Udhyaan" }, { name: "Pragati Garden" },
-                    { name: "Shivrai Mitra Mandal" }, { name: "Ashtavinayak Mitra Mandal" }, { name: "Shirmant Morya Chowk Lane 10" },
-                    { name: "Morya Udhyaan" }, { name: "Tiranga Mitra Mandal" }, { name: "Trimurti Mitra Mandal" },
-                    { name: "Shivmudra Mitra Mandal" }, { name: "Vignartha Mitra Mandal" }, { name: "Ekta Chowk" },
-                    { name: "Lane Number 6" }, { name: "Maji Sainki Mitra Mandal" }, { name: "Lane 5 Nyati Society" },
-                    { name: "Tirupati Magal Karayla" }, { name: "Hanuman Mandir, Tirupati Campus" }, { name: "Chatrapati Shivaji Maharaj Chowk Lane 1" },
-                    { name: "Sawant Petrol Pump" }, { name: "Vishrantwadi Chowk" }, { name: "Chatrapati Sambhaji Maharaj Chowk, Kalas (End)" }
-                ],
                 schedule: [
-                    { date: "19", month: "March", title: "Grand Shobhayatra", desc: "Detailed procession starts from Lane 14 and concludes at Kalas area." },
-                    { date: "29", month: "March", title: "Virat Hindu Sammelan", desc: "Main gathering and Snehabhojan at Lane 11 Ganpati Mandir." }
+                    { date: "27", month: "March", title: "Virat Hindu Sammelan", desc: "Main gathering and Snehabhojan at Lane 11 Ganpati Mandir." }
                 ]
             },
             mr: {
-                route: [
-                    { name: "विश्वेश्वर मंदिर Lane 14 (सुरुवात)" }, { name: "शिवज्वाला मित्र मंडळ" }, { name: "सुनील टिंगरे कार्यालय" },
-                    { name: "Lane 13 ओंकार मित्र मंडळ" }, { name: "किशोर उद्यान" }, { name: "प्रगती उद्यान" },
-                    { name: "शिवराई मित्र मंडळ" }, { name: "अष्टविनायक मित्र मंडळ" }, { name: "श्रीमंत मोरया चौक Lane 10" },
-                    { name: "मोरया उद्यान" }, { name: "तिरंगा मित्र मंडळ" }, { name: "त्रिमूर्ती मित्र मंडळ" },
-                    { name: "शिवमुद्रा मित्र मंडळ" }, { name: "विघ्नहर्ता मित्र मंडळ" }, { name: "एकता चौक" },
-                    { name: "Lane ६" }, { name: "माजी सैनिक मित्र मंडळ" }, { name: "Lane 5 ज्ञाती सोसायटी" },
-                    { name: "तिरुपती मंगल कार्यालय" }, { name: "हनुमान मंदिर, तिरुपती कॅम्पस" }, { name: "छत्रपती शिवाजी महाराज चौक Lane 1" },
-                    { name: "सावंत पेट्रोल पंप" }, { name: "विश्रांतवाडी चौक" }, { name: "छत्रपती संभाजी महाराज चौक, कळस (समारोप)" }
-                ],
                 schedule: [
-                    { date: "१९", month: "मार्च", title: "भव्य शोभायात्रा", desc: "Lane १४ पासून सुरू होऊन २४ प्रमुख ठिकाणांवरून शोभायात्रेचा छत्रपती संभाजी महाराज चौक, कळस येथे समारोप होईल." },
-                    { date: "२९", month: "मार्च", title: "विराट हिंदू संमेलन", desc: "मुख्य संमेलन आणि स्नेहभोजन Lane ११ गणपती मंदिर येथे आयोजित." }
+                    { date: "२७", month: "मार्च", title: "विराट हिंदू संमेलन", desc: "मुख्य संमेलन आणि स्नेहभोजन Lane ११ गणपती मंदिर येथे आयोजित." }
                 ]
             }
         };
 
-        const firebaseConfig = { apiKey: "AIzaSyBVMXl2ywXTz25eZtvauFI6RyF86Oy3poA", authDomain: "newp-6c593.firebaseapp.com", projectId: "newp-6c593", storageBucket: "newp-6c593.firebasestorage.app", messagingSenderId: "969102915860", appId: "1:969102915860:web:af374947f5aea16041aa01" };
-        const ADMIN_PASS = "tingre2026";
-        const GPS_ROUTE_COORDS = [[18.5794, 73.8996], [18.5786, 73.8980], [18.5775, 73.8970], [18.5765, 73.8960], [18.5755, 73.8940], [18.5745, 73.8920], [18.5732, 73.8899], [18.5740, 73.8880], [18.5760, 73.8870], [18.5780, 73.8865], [18.5800, 73.8860], [18.5815, 73.8855], [18.5830, 73.8850]];
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        let map, rallyMarker, isBroadcasting = false, currentLang = 'mr';
-        const rallyDocRef = doc(db, 'artifacts', 'tingre-rally-2026', 'public', 'data', 'rally', 'live_pos');
+        let currentLang = 'mr';
 
         window.selectLang = (l) => {
             currentLang = l;
             document.getElementById('lang-overlay').style.display = 'none';
             updateUIStrings();
             initDynamicContent();
-            initMap();
-            startSync();
         };
 
         function updateUIStrings() {
@@ -301,84 +177,29 @@
             document.getElementById('main-title').innerHTML = L.mainTitle;
             document.getElementById('organizer-tag').innerText = L.organizer;
             document.getElementById('footer-title').innerText = L.footerTitle;
-            document.querySelector('.trans-rally-title').innerText = L.rallyTitle;
-            document.querySelector('.id-rally-route-text').innerText = L.rallyRoute;
-            document.querySelector('.trans-connecting').innerText = L.connecting;
-            document.querySelector('.trans-milestone-title').innerText = L.milestones;
             document.querySelector('.trans-schedule-title').innerText = L.scheduleTitle;
             document.querySelector('.trans-food-title').innerText = L.foodTitle;
             document.getElementById('mahaprasad-text').innerText = L.mahaprasad;
             document.querySelector('.trans-whatsapp').innerText = L.whatsapp.toUpperCase();
             document.querySelectorAll('.trans-copyright').forEach(el => el.innerText = L.copyright);
-            document.querySelector('.trans-admin-title').innerText = L.adminTitle;
-            document.querySelector('.trans-unlock').innerText = L.unlock;
-            document.querySelector('.trans-start-gps').innerText = L.startGps;
-            document.getElementById('admin-pass').placeholder = L.passPlaceholder;
         }
 
         function initDynamicContent() {
-            const D = DATA[currentLang]; const L = LANG_DATA[currentLang];
-            const mList = document.getElementById('milestone-list');
-            mList.innerHTML = D.route.map((p, i) => `<div class="flex justify-between items-center bg-white p-4 rounded-2xl border border-stone-100 shadow-sm transition-all hover:border-orange-200"><div><h4 class="font-black text-stone-800 text-lg">${p.name}</h4><p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest">${L.checkpoints} ${i+1}</p></div><span class="bg-stone-900 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">${i+1}</span></div>`).join('');
+            const D = DATA[currentLang];
             const sList = document.getElementById('timeline-list');
-            sList.innerHTML = D.schedule.map((s, i) => `<div class="timeline-item ${i % 2 === 0 ? 'timeline-item-left' : 'timeline-item-right'}"><div class="timeline-dot"></div><div class="timeline-content bg-white p-6 rounded-[2.5rem] shadow-xl border border-white"><div class="timeline-arrow"></div><div class="flex items-center gap-4 mb-4"><span class="text-3xl font-black text-orange-500">${s.date}</span><div><p class="font-black uppercase text-stone-900 leading-none">${s.month}</p></div></div><h4 class="font-black text-stone-800 text-lg uppercase tracking-tight mb-2">${s.title}</h4><p class="text-stone-600 text-sm font-medium leading-relaxed">${s.desc}</p></div></div>`).join('');
+            sList.innerHTML = D.schedule.map((s) => `
+                <div class="timeline-item">
+                    <div class="timeline-content bg-white p-10 rounded-[2.5rem] shadow-xl border border-white text-center">
+                        <div class="flex flex-col items-center gap-4 mb-4">
+                            <span class="text-6xl font-black text-orange-500">${s.date}</span>
+                            <div><p class="font-black uppercase text-stone-900 text-2xl leading-none">${s.month}</p></div>
+                        </div>
+                        <h4 class="font-black text-stone-800 text-2xl uppercase tracking-tight mb-4">${s.title}</h4>
+                        <p class="text-stone-600 text-lg font-medium leading-relaxed">${s.desc}</p>
+                    </div>
+                </div>
+            `).join('');
         }
-
-        function initMap() {
-            if (map) return;
-            map = L.map('map', { zoomControl: false }).setView(GPS_ROUTE_COORDS[0], 15);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            L.polyline(GPS_ROUTE_COORDS, { color: '#ea580c', weight: 6, opacity: 0.7 }).addTo(map);
-            rallyMarker = L.marker(GPS_ROUTE_COORDS[0], { icon: L.divIcon({ html: `<div class="rally-marker">🚩</div>`, iconSize: [40, 40], iconAnchor: [20, 40], className: 'c' }) }).addTo(map);
-            setTimeout(() => { 
-                map.invalidateSize(); 
-                map.setView(GPS_ROUTE_COORDS[0], 15);
-            }, 800);
-        }
-
-        async function startSync() {
-            try {
-                await signInAnonymously(auth);
-                onAuthStateChanged(auth, (u) => {
-                    if (!u) return;
-                    document.getElementById('status-text').innerText = LANG_DATA[currentLang].liveSync.toUpperCase();
-                    document.getElementById('status-dot').className = "w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse";
-                    onSnapshot(rallyDocRef, (s) => { 
-                        if(s.exists()){ 
-                            const d = s.data(); 
-                            if(d.lat && d.lng) {
-                                rallyMarker.setLatLng([d.lat, d.lng]); 
-                                if(!isBroadcasting) map.panTo([d.lat, d.lng]);
-                            }
-                        } 
-                    }, (err) => console.error("Firestore error:", err));
-                });
-            } catch (e) { console.error("Auth error:", e); }
-        }
-
-        window.togglePanel = () => document.getElementById('admin-panel').classList.toggle('hidden');
-        window.handleUnlock = () => {
-            if(document.getElementById('admin-pass').value === ADMIN_PASS){
-                document.getElementById('auth-view').classList.add('hidden');
-                document.getElementById('control-view').classList.remove('hidden');
-            } else { alert(currentLang === 'mr' ? "चुकीचा पासवर्ड" : "Incorrect Password"); }
-        };
-
-        window.toggleBroadcast = () => {
-            if(!isBroadcasting){
-                isBroadcasting = true;
-                document.getElementById('broadcast-btn').innerText = LANG_DATA[currentLang].stopGps.toUpperCase();
-                document.getElementById('broadcast-btn').classList.replace('bg-orange-600', 'bg-red-600');
-                watchId = navigator.geolocation.watchPosition(async (p) => {
-                    const pos = { lat: p.coords.latitude, lng: p.coords.longitude, ts: Date.now() };
-                    try {
-                        await setDoc(rallyDocRef, pos);
-                        rallyMarker.setLatLng([pos.lat, pos.lng]);
-                        map.panTo([pos.lat, pos.lng]);
-                    } catch (err) { console.error("Update error:", err); }
-                }, (err) => console.error(err), { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 });
-            } else { location.reload(); }
-        };
 
         // Hero Slider
         let slideIdx = 0;
